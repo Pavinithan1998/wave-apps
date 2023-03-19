@@ -4,9 +4,9 @@ Step 1:
 
         pip install h2o-wave
 
-    But,
-        We recommended method is to install h2o_wave into a virtual environment for best practice 
-        so you can work with multiple projects which require different versions of packages
+But,
+    We recommended method is to install h2o_wave into a virtual environment for best practice 
+    so you can work with multiple projects which require different versions of packages
 
         python3 -m venv venv
         source venv/bin/activate
