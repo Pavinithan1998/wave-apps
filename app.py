@@ -2,9 +2,9 @@ from h2o_wave import main, app, Q, ui, on, handle_on, data
 from typing import Optional, List
 import pandas as pd 
 # import numpy as np 
-# import time
-#import psutil
-# from faker import Faker
+import time
+from synth import FakePercent, FakeCategoricalSeries
+from faker import Faker
 
 
 df = pd.read_csv('application_data.csv')
@@ -141,7 +141,7 @@ def line_view(q: Q):
                 y='=count', 
                 y_min=0,
                 y_max = 1000,
-                color="#eb4559"
+                color="#000000"
             ),
             ui.mark(
                 type='area', 
@@ -159,7 +159,7 @@ def line_view(q: Q):
                 y='=dead', 
                 y_min=0,
                 y_max = 1000,
-                color="#000000"
+                color="#1db4f0"
             ),
             ui.mark(
                 type='point', 
@@ -177,7 +177,7 @@ def line_view(q: Q):
                 y='=dead', 
                 y_min=0,
                 y_max = 1000,
-                color="#000000"
+                color="#1db4f0"
             ),
 
         ])
@@ -200,7 +200,7 @@ def table_view(q: Q):
                 tags=[
                     ui.tag(label='FAIL', color='#e81029'),
                     ui.tag(label='DONE', color='#D2E3F8', label_color='#053975'),
-                    ui.tag(label='SUCCESS', color='#00b809'),
+                    ui.tag(label='SUCCESS', color='#07ba28'),
                 ]
             ))
         ],
@@ -209,12 +209,12 @@ def table_view(q: Q):
             ui.table_row(name='row2', cells=['2020-02-18', '580', '150', 'FAIL']),
             ui.table_row(name='row3', cells=['2020-03-18', '528', '110', 'DONE']),
             ui.table_row(name='row4', cells=['2020-04-18', '361', '64', 'DONE,FAIL']),
-            ui.table_row(name='row5', cells=['2020-05-18', '228', '84', 'DONE, SUCCESS']),
+            ui.table_row(name='row5', cells=['2020-05-18', '228', '84', 'DONE,SUCCESS']),
             ui.table_row(name='row6', cells=['2020-06-18', '418', '98', 'DONE']),
             ui.table_row(name='row7', cells=['2020-07-18', '824', '210', 'FAIL']),
             ui.table_row(name='row8', cells=['2020-08-18', '539', '130', 'DONE']),
             ui.table_row(name='row9', cells=['2020-09-18', '712', '150', 'FAIL']),
-            ui.table_row(name='row10', cells=['2020-10-18', '213', '39', 'DONE, SUCCESS']),
+            ui.table_row(name='row10', cells=['2020-10-18', '213', '39', 'DONE,SUCCESS']),
         ])
     ]))
 
@@ -233,16 +233,16 @@ def table_view2(q: Q):
                 tags=[
                     ui.tag(label='FAIL', color='$red'),
                     ui.tag(label='DONE', color='#D2E3F8', label_color='#053975'),
-                    ui.tag(label='SUCCESS', color='$mint'),
+                    ui.tag(label='SUCCESS', color='#07ba28'),
                 ]
             ))
         ],
         rows=[
             ui.table_row(name='row1', cells=['Leukemia Research 1', 'FAIL']),
-            ui.table_row(name='row2', cells=['Leukemia Research 2', 'SUCCESS,DONE']),
+            ui.table_row(name='row2', cells=['Leukemia Research 2', 'SUCCESS ,DONE']),
             ui.table_row(name='row3', cells=['Leukemia Research 3', 'DONE']),
             ui.table_row(name='row4', cells=['Leukemia Research 4', 'FAIL']),
-            ui.table_row(name='row5', cells=['Leukemia Research 5', 'SUCCESS,DONE']),
+            ui.table_row(name='row5', cells=['Leukemia Research 5', 'SUCCESS ,DONE']),
             ui.table_row(name='row6', cells=['Leukemia Research 6', 'DONE']),
         ])
     ]))
@@ -621,6 +621,7 @@ async def change_theme(q: Q):
         q.page["header"].items = [ui.menu([ui.command(name='change_theme', icon='Sunny', label='Light mode')])]
         q.page["meta"].theme = "h2o-dark"
         q.client.dark_mode = True
+
 
 @app('/')
 async def serve(q: Q):
